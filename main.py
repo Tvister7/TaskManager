@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
+from fastapi_pagination import add_pagination
 from tortoise.contrib.fastapi import register_tortoise
 from endpoints import hello, users, token, tasks
 
@@ -19,6 +20,7 @@ register_tortoise(
     add_exception_handlers=True
 )
 
+add_pagination(app)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", port=8000, host="127.0.0.1", reload=True)

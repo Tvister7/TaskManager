@@ -1,3 +1,4 @@
+from email_validator import validate_email, EmailNotValidError
 from fastapi import Depends, HTTPException, status
 from jose import jwt, JWTError
 from base.security import get_password_hash, verify_password, oauth2_scheme, SECRET_KEY, ALGORITHM
@@ -24,12 +25,17 @@ async def get_all_users() -> User_Pydantic_List:
 
 
 async def create_new_user(user: User_In_Pydantic) -> Status:
-    user_obj = await User.create(email=user.email,
+    try:
+        valid = validate_email(user.email)
+        email = valid.email
+    except EmailNotValidError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+    user_obj = await User.create(email=email,
                                  username=user.username,
                                  password=get_password_hash(user.password))
     await user_obj.save()
     if not user_obj:
-        return Status(status_type="Error", message="Database error")
+        raise HTTPException(status_code=400, detail="Database error")
     return Status(status_type="Success", message=f"User {user.dict().get('username')} successfully created!")
 
 

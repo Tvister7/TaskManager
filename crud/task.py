@@ -1,3 +1,5 @@
+import datetime
+
 from fastapi import HTTPException
 
 from models.tasks import Task
@@ -10,13 +12,15 @@ async def get_task_by_id(task_id: int) -> Task_Pydantic:
 
 
 async def create_new_task(task: Task_In_Pydantic, creator_id: int) -> Status:
+    if task.expired_at.timestamp() < datetime.datetime.now().timestamp():
+        raise HTTPException(status_code=400, detail="Invalid expiration datetime")
     task_obj = await Task.create(name=task.name,
                                  about=task.about,
                                  expired_at=task.expired_at,
                                  creator_id=creator_id)
     await task_obj.save()
     if not task_obj:
-        return Status(status_type="Error", message="Database error")
+        raise HTTPException(status_code=400, detail="Database error")
     return Status(status_type="Success", message=f"Task {task.dict().get('name')} successfully created!")
 
 
