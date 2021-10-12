@@ -8,7 +8,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/token/')
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -20,6 +20,5 @@ def get_password_hash(password):
 
 
 def make_token(user_obj: User_Pydantic, secret_key: str = SECRET_KEY, algorithm: str = ALGORITHM):
-    print(jwt.encode(user_obj.dict(), secret_key, algorithm=algorithm))
     return jwt.encode(user_obj.dict(), secret_key, algorithm=algorithm)
 

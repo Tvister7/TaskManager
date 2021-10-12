@@ -7,14 +7,9 @@ from schemas.user_schema import User_Pydantic, User_In_Pydantic, User_Pydantic_L
 router = APIRouter()
 
 
-@router.post("/", response_model=Status)
+@router.post("/", response_model=Status, status_code=201)
 async def create_user(user: User_In_Pydantic):
     return await create_new_user(user)
-
-
-@router.get("/{user_id}", response_model=User_Pydantic, responses={404: {"model": HTTPNotFoundError}})
-async def get_user_by_id(user_id: int):
-    return await get_by_id(user_id)
 
 
 @router.get("/", response_model=User_Pydantic_List)

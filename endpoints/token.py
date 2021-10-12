@@ -9,9 +9,9 @@ from schemas.token import Token, Login
 router = APIRouter()
 
 
-@router.post("/", response_model=Token)
+@router.post("/", response_model=Token, status_code=201)
 async def generate_token(form_data: OAuth2PasswordRequestForm = Depends(), expires_delta: Optional[timedelta] = None):
-    user_obj = await authenticate_user(Login(email=form_data.username, password=form_data.password))
+    user_obj = await authenticate_user(Login(username=form_data.username, password=form_data.password))
 
     if not user_obj:
         raise HTTPException(

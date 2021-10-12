@@ -7,7 +7,8 @@ class Token(BaseModel):
 
 
 class Login(BaseModel):
-    email: EmailStr
+    # email: EmailStr
+    username: str
     password: str
 
 

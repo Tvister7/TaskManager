@@ -1,13 +1,14 @@
 import uvicorn
 from fastapi import FastAPI
 from tortoise.contrib.fastapi import register_tortoise
-from endpoints import hello, users, token
+from endpoints import hello, users, token, tasks
 
 app = FastAPI(title="AuthProject")
 
 app.include_router(hello.router, prefix="/hello", tags=["hello"])
 app.include_router(users.router, prefix="/users", tags=["users"])
 app.include_router(token.router, prefix="/token", tags=["token"])
+app.include_router(tasks.router, prefix="/tasks", tags=["tasks"])
 
 
 register_tortoise(
