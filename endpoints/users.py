@@ -1,12 +1,8 @@
-from typing import List
-
 from fastapi import APIRouter, Depends
 from fastapi_pagination import Page, paginate
-from pydantic import parse_obj_as
-
 from crud.user import get_all_users, create_new_user, get_current_user
 from schemas.status import Status
-from schemas.user_schema import User_Pydantic, User_In_Pydantic, User_Pydantic_List
+from schemas.user_schema import User_Pydantic, User_In_Pydantic
 
 router = APIRouter()
 

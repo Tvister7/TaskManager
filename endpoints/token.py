@@ -18,7 +18,7 @@ async def generate_token(form_data: OAuth2PasswordRequestForm = Depends(), expir
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Invalid username or password'
         )
-
+    # Функционал по добавлению жизни токена, пока не нужен
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:

@@ -3,7 +3,7 @@ from fastapi_pagination import Page, paginate
 from crud.task import create_new_task, get_all_tasks, get_all_current_user_tasks, update_user_task, delete_user_task
 from crud.user import get_current_user
 from schemas.status import Status
-from schemas.task_schema import Task_In_Pydantic, Task_Pydantic_List, Task_Pydantic
+from schemas.task_schema import Task_In_Pydantic, Task_Pydantic
 from schemas.user_schema import User_Pydantic
 
 router = APIRouter()
